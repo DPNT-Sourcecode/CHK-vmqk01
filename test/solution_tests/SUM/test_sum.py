@@ -7,4 +7,3 @@ class TestSum():
 
     def test_sum_0(self):
         assert sum_solution.compute(6, 0) == 6
-
