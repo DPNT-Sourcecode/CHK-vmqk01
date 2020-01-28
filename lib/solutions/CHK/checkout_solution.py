@@ -11,10 +11,11 @@ Price = int  # This should be decimal.Decimal if we wish to handle pennies
 # This allows for more offers. Could be a list of pairs (all we do on this dict
 # is iteration on key-value pairs), but it's slightly easier to read this way
 PRICE_TABLE: Dict[SKU, Dict[int, Price]] = {
-    "A": {1: 50, 3: 130},
+    "A": {1: 50, 3: 130, 5: 200},
     "B": {1: 30, 2: 45},
     "C": {1: 20},
     "D": {1: 15},
+    "E": {1: 40},
 }
 
 
@@ -40,6 +41,7 @@ def checkout(skus: str) -> Price:
         except KeyError:
             return -1
     return total
+
 
 
 
