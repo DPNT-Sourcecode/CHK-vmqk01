@@ -23,6 +23,14 @@ def test_checkout_offer_partial():
     assert checkout_solution.checkout("AAAA") == 130+50
 
 
+def test_checkout_offer_combined_groups():
+    assert checkout_solution.checkout("AAAAAAAA") == 200+130
+
+
+def test_checkout_offer_combined_groups_2():
+    assert checkout_solution.checkout("AAAAAAAAA") == 200+130+50
+
+
 def test_checkout_offer_mixed():
     assert checkout_solution.checkout("ABABAA") == 130+45+50
 
@@ -123,6 +131,7 @@ def test_external_tests():
     assert checkout_solution.checkout("CCADDEEBBA") == 295
     assert checkout_solution.checkout("AAAAAEEBAAABB") == 505
     assert checkout_solution.checkout("ABCDECBAABCABBAAAEEAA") == 705
+
 
 
 
