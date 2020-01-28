@@ -150,8 +150,3 @@ def checkout(skus: str) -> Price:
         except KeyError:
             return -1
     return total
-
-
-
-
-
