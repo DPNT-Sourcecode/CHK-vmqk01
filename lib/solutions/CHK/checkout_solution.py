@@ -1,4 +1,5 @@
 # noinspection PyUnusedLocal
+from collections import Counter
 from typing import Dict
 
 SKU = str
@@ -14,9 +15,11 @@ PRICE_TABLE: Dict[SKU, Dict[int, Price]] = {
 # skus = unicode string
 def checkout(skus: str):
     total = 0
-    for sku in skus:
-        total += PRICE_TABLE[sku][1]
+    counts = Counter(skus)
+    for sku, count in counts.items():
+        total += PRICE_TABLE[sku][count]
     return total
+
 
 
 
