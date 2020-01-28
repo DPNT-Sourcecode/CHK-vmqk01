@@ -67,6 +67,10 @@ def test_get_best_price_no_offer():
     assert checkout_solution.get_best_price("D", 42) == 42*15
 
 
+def test_get_best_price_null():
+    assert checkout_solution.get_best_price("B", 0) == 0
+
+
 def test_apply_discounts():
     cart = Counter("EEBBB")
     checkout_solution.apply_cart_discounts(cart)
@@ -131,7 +135,3 @@ def test_external_tests():
     assert checkout_solution.checkout("CCADDEEBBA") == 295
     assert checkout_solution.checkout("AAAAAEEBAAABB") == 505
     assert checkout_solution.checkout("ABCDECBAABCABBAAAEEAA") == 705
-
-
-
-
