@@ -35,7 +35,11 @@ def checkout(skus: str) -> Price:
     total = 0
     counts = Counter(skus)
     for sku, count in counts.items():
-        total += get_best_price(sku, count)
+        try:
+            total += get_best_price(sku, count)
+        except KeyError:
+            return -1
     return total
+
 
 

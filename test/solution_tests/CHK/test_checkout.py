@@ -25,9 +25,18 @@ def test_checkout_offer_mixed():
     assert checkout_solution.checkout("ABABAA") == 130+45+50
 
 
-def test_checkout_best_price():
+def test_checkout_invalid():
+    assert checkout_solution.checkout("X") == -1
+
+
+def test_checkout_partially_invalid():
+    assert checkout_solution.checkout("AX") == -1
+
+
+def test_get_best_price():
     assert checkout_solution.get_best_price("A", 4) == 130+50
 
 
-def test_checkout_best_price_no_offer():
+def test_get_best_price_no_offer():
     assert checkout_solution.get_best_price("D", 42) == 42*15
+
