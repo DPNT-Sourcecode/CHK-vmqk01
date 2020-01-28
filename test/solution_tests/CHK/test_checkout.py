@@ -61,8 +61,10 @@ def test_checkout_get_one_free_same():
 
 
 def test_combined_discount_kinds():
-    assert checkout_solution.checkout("FFFF") == 30
-    "RRQQ"
+    # Get one Q free, pay the other 2 unit price
+    assert checkout_solution.checkout("RRRQQQ") == 3*50 + 2*30
+    # Get one Q free, pay the other 3 special offer
+    assert checkout_solution.checkout("RRRQQQQ") == 3*50 + 80
 
 
 def test_checkout_invalid():
@@ -149,5 +151,6 @@ def test_external_tests():
     assert checkout_solution.checkout("CCADDEEBBA") == 280
     assert checkout_solution.checkout("AAAAAEEBAAABB") == 455
     assert checkout_solution.checkout("ABCDECBAABCABBAAAEEAA") == 665
+
 
 
