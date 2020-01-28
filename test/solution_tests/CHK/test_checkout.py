@@ -53,6 +53,11 @@ def test_checkout_get_one_free_combined():
 
 def test_checkout_get_one_free_same():
     assert checkout_solution.checkout("FFF") == checkout_solution.checkout("FF") == 20
+    assert checkout_solution.checkout("FFFF") == 30
+    assert checkout_solution.checkout("FFFFF") == 40
+    assert checkout_solution.checkout("FFFFFF") == 40
+    assert checkout_solution.checkout("FFFFFFF") == 50
+    assert checkout_solution.checkout("FFFFFFFF") == 60
 
 
 def test_checkout_invalid():
@@ -139,4 +144,5 @@ def test_external_tests():
     assert checkout_solution.checkout("CCADDEEBBA") == 280
     assert checkout_solution.checkout("AAAAAEEBAAABB") == 455
     assert checkout_solution.checkout("ABCDECBAABCABBAAAEEAA") == 665
+
 
