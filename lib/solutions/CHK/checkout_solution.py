@@ -41,6 +41,11 @@ def apply_cart_discounts(cart: Counter) -> None:
 
     Assumes it's always beneficial for the user to get this offer.
     """
+    for x in CART_DISCOUNTS:
+        n, m, y = CART_DISCOUNTS[x]
+        x_bought = cart[x]
+        free_items = m * (x_bought // n)
+        cart[y] = max(0, cart[y] - free_items)
 
 
 # skus = unicode string

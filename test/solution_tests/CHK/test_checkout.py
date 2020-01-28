@@ -1,3 +1,5 @@
+from collections import Counter
+
 from solutions.CHK import checkout_solution
 
 
@@ -55,3 +57,7 @@ def test_get_best_price():
 
 def test_get_best_price_no_offer():
     assert checkout_solution.get_best_price("D", 42) == 42*15
+
+
+def test_apply_discounts():
+    assert checkout_solution.apply_cart_discounts
