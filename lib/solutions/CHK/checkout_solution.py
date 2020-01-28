@@ -8,6 +8,11 @@ Price = int  # This should be decimal.Decimal if we wish to handle pennies
 
 
 class PricingInfo:
+    """
+    Helper class to build the price table. This is same functionality as
+    before, but makes writing/updating the price table more readable
+    """
+
     def __init__(self) -> None:
         self.price_table: Dict[SKU, List[Tuple[int, Price]]] = {}
         self.cart_discounts: Dict[SKU, Tuple[int, int, SKU]] = {}
@@ -60,22 +65,43 @@ class PricingInfo:
 
 # initialize price table
 supermarket = PricingInfo()
-for sku, unit in zip("ABCDEF", [50, 30, 20, 15, 40, 10]):
+for sku, unit in zip(
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+    [
+        50,
+        30,
+        20,
+        15,
+        40,
+        10,
+        20,
+        10,
+        35,
+        60,
+        80,
+        90,
+        15,
+        40,
+        10,
+        50,
+        30,
+        50,
+        30,
+        20,
+        40,
+        50,
+        20,
+        90,
+        10,
+        50,
+    ],
+):
     supermarket.add_sku(sku, unit)
 supermarket.add_multi_price_offer("A", 3, 130)
 supermarket.add_multi_price_offer("A", 5, 200)
 supermarket.add_multi_price_offer("B", 2, 45)
 supermarket.add_buy_many_get_some_free("E", 2, "B", 1)
 supermarket.add_buy_many_get_some_free("F", 2, "F", 1)
-
-
-def get_best_price(sku: SKU, count: int) -> Price:
-    return supermarket.get_price(sku, count)
-
-
-def apply_cart_discounts(cart: Counter) -> None:
-    return supermarket.apply_cart_discounts(cart)
-
 
 # skus = unicode string
 def checkout(skus: str) -> Price:
@@ -88,6 +114,7 @@ def checkout(skus: str) -> Price:
         except KeyError:
             return -1
     return total
+
 
 
 

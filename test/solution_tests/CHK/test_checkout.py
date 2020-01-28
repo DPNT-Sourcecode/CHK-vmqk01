@@ -69,26 +69,26 @@ def test_checkout_partially_invalid():
 
 
 def test_get_best_price():
-    assert checkout_solution.get_best_price("A", 4) == 130+50
+    assert checkout_solution.supermarket.get_price("A", 4) == 130+50
 
 
 def test_get_best_price_no_offer():
-    assert checkout_solution.get_best_price("D", 42) == 42*15
+    assert checkout_solution.supermarket.get_price("D", 42) == 42*15
 
 
 def test_get_best_price_null():
-    assert checkout_solution.get_best_price("B", 0) == 0
+    assert checkout_solution.supermarket.get_price("B", 0) == 0
 
 
 def test_apply_discounts():
     cart = Counter("EEBBB")
-    checkout_solution.apply_cart_discounts(cart)
+    checkout_solution.supermarket.apply_cart_discounts(cart)
     assert cart["B"] == 2  # One was free
 
 
 def test_apply_discounts_no_matching_offer():
     cart = Counter("AABBB")
-    checkout_solution.apply_cart_discounts(cart)
+    checkout_solution.supermarket.apply_cart_discounts(cart)
     # No changes
     assert cart["A"] == 2
     assert cart["B"] == 3
@@ -96,7 +96,7 @@ def test_apply_discounts_no_matching_offer():
 
 def test_apply_discounts_no_free_items_asked():
     cart = Counter("EE")
-    checkout_solution.apply_cart_discounts(cart)
+    checkout_solution.supermarket.apply_cart_discounts(cart)
     # No changes
     assert cart["E"] == 2
     assert cart["B"] == 0
@@ -144,3 +144,4 @@ def test_external_tests():
     assert checkout_solution.checkout("CCADDEEBBA") == 280
     assert checkout_solution.checkout("AAAAAEEBAAABB") == 455
     assert checkout_solution.checkout("ABCDECBAABCABBAAAEEAA") == 665
+
