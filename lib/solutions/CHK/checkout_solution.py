@@ -1,10 +1,15 @@
 # noinspection PyUnusedLocal
 from collections import Counter
-import math
-from typing import Dict, List, Sequence, Tuple
+from typing import Dict, List, NamedTuple, Sequence, Tuple, Set
 
 SKU = str
 Price = int  # This should be decimal.Decimal if we wish to handle pennies
+
+
+class Pack(NamedTuple):
+    # each instance of this is a virtual SKU for packs of related products
+    n: int
+    info: str
 
 
 class PricingInfo:
@@ -134,5 +139,6 @@ def checkout(skus: str) -> Price:
         except KeyError:
             return -1
     return total
+
 
 
