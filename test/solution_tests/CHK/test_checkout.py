@@ -44,6 +44,19 @@ def test_checkout_get_many_free_offer():
     assert checkout_solution.checkout("EEEEBB") == 40*4  # 2xB are free
 
 
+def test_checkout_group_discount():
+    assert checkout_solution.checkout("SSS") == 45
+
+
+def test_checkout_group_discount_mixed():
+    assert checkout_solution.checkout("STX") == 45
+
+
+def test_checkout_group_discount_leftover():
+    # we pay a group and the Y, which is cheapest
+    assert checkout_solution.checkout("YSTX") == 45 + 17
+
+
 def test_checkout_get_one_free_combined():
     # In this scenario one B is free, the other pays unit price
     assert checkout_solution.checkout("EEBB") == 40*2 + 30
@@ -151,3 +164,4 @@ def test_external_tests():
     assert checkout_solution.checkout("CCADDEEBBA") == 280
     assert checkout_solution.checkout("AAAAAEEBAAABB") == 455
     assert checkout_solution.checkout("ABCDECBAABCABBAAAEEAA") == 665
+

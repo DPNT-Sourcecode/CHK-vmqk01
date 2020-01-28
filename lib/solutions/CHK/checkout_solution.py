@@ -83,17 +83,16 @@ class PricingInfo:
         """
         for skus, pack in self.group_discounts:
             # Find all items that could go into the pack and their prices
-            pack_items = []
+            pack_items: List[Tuple[Price, SKU]] = []
             for sku in skus:
-                pack_items += cart[sku]*[(self.get_price(sku, 1), sku)]
+                pack_items += cart[sku] * [(self.get_price(sku, 1), sku)]
             # Sort by price (most expensive first)
             pack_items.sort(reverse=True)
             npacks = len(pack_items) // pack.size
             cart[pack] = npacks
             # remove the most expensive items that went into groups
-            for _, sku in pack_items[:npacks * packsize]:
-                cart[sku -= 1]
-
+            for _, sku in pack_items[: npacks * pack.size]:
+                cart[sku] -= 1
 
 
 # initialize price table
@@ -154,10 +153,12 @@ def checkout(skus: str) -> Price:
     total = 0
     counts = Counter(skus)
     supermarket.apply_cart_discounts(counts)
+    supermarket.apply_group_discounts(counts)
     for sku, count in counts.items():
         try:
             total += supermarket.get_price(sku, count)
         except KeyError:
             return -1
     return total
+
 
