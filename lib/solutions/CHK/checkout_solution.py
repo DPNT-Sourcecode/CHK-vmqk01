@@ -65,8 +65,7 @@ class PricingInfo:
 
     def apply_cart_discounts(self, cart: Counter) -> None:
         """
-        Modify cart for discounts of the type "buy N×X, get M×Y free" and
-        for group discounts.
+        Modify cart for discounts of the type "buy N×X, get M×Y free"
 
         Assumes it's always beneficial for the user to get this offer.
         """
@@ -75,6 +74,16 @@ class PricingInfo:
             x_bought = cart[x]
             free_items = m * (x_bought // n)
             cart[y] = max(0, cart[y] - free_items)
+
+    def apply_pack_discounts(self, cart: Counter) -> None:
+        """
+        Modify cart for discounts of the type "buy N×X, get M×Y free" and
+        for group discounts.
+
+        Assumes it's always beneficial for the user to get this offer.
+        """
+        for skus, pack in self.group_discounts:
+
 
 
 # initialize price table
@@ -141,6 +150,7 @@ def checkout(skus: str) -> Price:
         except KeyError:
             return -1
     return total
+
 
 
 
