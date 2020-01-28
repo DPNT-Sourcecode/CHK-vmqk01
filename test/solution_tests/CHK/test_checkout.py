@@ -57,6 +57,11 @@ def test_checkout_group_discount_leftover():
     assert checkout_solution.checkout("YSTX") == 45 + 17
 
 
+def test_checkout_group_discount_repeat():
+    assert checkout_solution.checkout("STXYSTX") == 2*45+17
+
+
+
 def test_checkout_get_one_free_combined():
     # In this scenario one B is free, the other pays unit price
     assert checkout_solution.checkout("EEBB") == 40*2 + 30
@@ -164,4 +169,5 @@ def test_external_tests():
     assert checkout_solution.checkout("CCADDEEBBA") == 280
     assert checkout_solution.checkout("AAAAAEEBAAABB") == 455
     assert checkout_solution.checkout("ABCDECBAABCABBAAAEEAA") == 665
+
 

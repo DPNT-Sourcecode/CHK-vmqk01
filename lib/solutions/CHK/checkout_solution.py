@@ -149,7 +149,7 @@ supermarket.add_group_discount_offer("STXYZ", 3, 45)
 
 
 # skus = unicode string
-def checkout(skus: str) -> Price:
+def checkout(skus: Sequence[SKU]) -> Price:
     total = 0
     counts = Counter(skus)
     supermarket.apply_cart_discounts(counts)
@@ -160,5 +160,6 @@ def checkout(skus: str) -> Price:
         except KeyError:
             return -1
     return total
+
 
 
