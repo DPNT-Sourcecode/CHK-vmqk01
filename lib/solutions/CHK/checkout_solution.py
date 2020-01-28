@@ -13,7 +13,10 @@ PRICE_TABLE: Dict[SKU, Dict[int, Price]] = {
 
 # skus = unicode string
 def checkout(skus: str):
-    print(skus)
-    raise NotImplementedError()
+    total = 0
+    for sku in skus:
+        total += PRICE_TABLE[sku][1]
+    return total
+
 
 
