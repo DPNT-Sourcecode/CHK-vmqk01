@@ -27,7 +27,8 @@ class PricingInfo:
     def add_buy_many_get_some_free(self, x: SKU, n: int, y: SKU, m: int) -> None:
         if x == y:
             # This is a hidden multi-price discount
-            self.add_multi_price_offer(x, n + m, (n - m) * self.get_price(x, 1))
+            print(x, n + m, (n - m) * self.get_price(x, 1))
+            self.add_multi_price_offer(x, n + m, n * self.get_price(x, 1))
         else:
             self.cart_discounts[x] = (n, m, y)
 
@@ -43,6 +44,18 @@ class PricingInfo:
             total_offers, count = divmod(count, offer_count)
             price += total_offers * offer_price
         return price
+
+    def apply_cart_discounts(self, cart: Counter) -> None:
+        """
+        Modify cart for discounts of the type "buy N×X, get M×Y free".
+
+        Assumes it's always beneficial for the user to get this offer.
+        """
+        for x in self.cart_discounts:
+            n, m, y = self.cart_discounts[x]
+            x_bought = cart[x]
+            free_items = m * (x_bought // n)
+            cart[y] = max(0, cart[y] - free_items)
 
 
 # initialize price table
@@ -61,17 +74,7 @@ def get_best_price(sku: SKU, count: int) -> Price:
 
 
 def apply_cart_discounts(cart: Counter) -> None:
-    """
-    Modify cart for discounts of the type "buy N×X, get M×Y free".
-
-    Assumes it's always beneficial for the user to get this offer.
-    """
-    print(supermarket.cart_discounts)
-    for x in supermarket.cart_discounts:
-        n, m, y = supermarket.cart_discounts[x]
-        x_bought = cart[x]
-        free_items = m * (x_bought // n)
-        cart[y] = max(0, cart[y] - free_items)
+    return supermarket.apply_cart_discounts(cart)
 
 
 # skus = unicode string
@@ -85,6 +88,7 @@ def checkout(skus: str) -> Price:
         except KeyError:
             return -1
     return total
+
 
 
 
