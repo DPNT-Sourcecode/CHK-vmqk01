@@ -1,7 +1,7 @@
 # noinspection PyUnusedLocal
 from collections import Counter
 import math
-from typing import Dict, List, Tuple
+from typing import Dict, List, Sequence, Tuple
 
 SKU = str
 Price = int  # This should be decimal.Decimal if we wish to handle pennies
@@ -16,6 +16,7 @@ class PricingInfo:
     def __init__(self) -> None:
         self.price_table: Dict[SKU, List[Tuple[int, Price]]] = {}
         self.cart_discounts: Dict[SKU, Tuple[int, int, SKU]] = {}
+        self.group_discounts: List[Tuple[Set[SKU], int, Price]]
 
     def add_sku(self, sku: SKU, unit_price: Price) -> None:
         if sku in self.price_table:
@@ -37,6 +38,11 @@ class PricingInfo:
         else:
             self.cart_discounts[x] = (n, m, y)
 
+    def add_group_discount_offer(
+        self, skus: Sequence[SKU], count: int, discount_price: Price
+    ) -> None:
+        self.group_discounts.append((set(skus), count, discount_price))
+
     def get_price(self, sku: SKU, count: int) -> Price:
         """
         Returns price using best offer for the given count of a product by sku
@@ -52,7 +58,8 @@ class PricingInfo:
 
     def apply_cart_discounts(self, cart: Counter) -> None:
         """
-        Modify cart for discounts of the type "buy N×X, get M×Y free".
+        Modify cart for discounts of the type "buy N×X, get M×Y free" and
+        for group discounts.
 
         Assumes it's always beneficial for the user to get this offer.
         """
@@ -113,6 +120,7 @@ supermarket.add_buy_many_get_some_free("R", 3, "Q", 1)
 supermarket.add_buy_many_get_some_free("U", 3, "U", 1)
 supermarket.add_multi_price_offer("V", 2, 90)
 supermarket.add_multi_price_offer("V", 3, 130)
+supermarket.add_group_discount_offer("STXYZ", 3, 45)
 
 
 # skus = unicode string
@@ -126,4 +134,5 @@ def checkout(skus: str) -> Price:
         except KeyError:
             return -1
     return total
+
 
