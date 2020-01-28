@@ -27,6 +27,10 @@ def get_best_price(sku: SKU, count: int) -> Price:
     Returns price using best offer for the given count of a product by sku
     """
     price = 0
+    # This depends on
+    #  - the PRICE_TABLE having offers from larger to smaller
+    #  - the offers being stable
+    #  - having a unit price at the end
     for offer_count, offer_price in PRICE_TABLE[sku]:
         total_offers, count = divmod(count, offer_count)
         price += total_offers * offer_price
@@ -60,4 +64,5 @@ def checkout(skus: str) -> Price:
             return -1
     print(total)
     return total
+
 
