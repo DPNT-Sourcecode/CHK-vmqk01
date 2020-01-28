@@ -67,16 +67,17 @@ def test_apply_discounts():
 
 def test_apply_discounts_no_matching_offer():
     cart = Counter("AABBB")
-    old = cart.copy()
     checkout_solution.apply_cart_discounts(cart)
     # No changes
-    assert cart == old
+    assert cart["A"] == 2
+    assert cart["B"] == 3
 
 
 def test_apply_discounts_no_free_items_asked():
     cart = Counter("EE")
-    old = cart.copy()
     checkout_solution.apply_cart_discounts(cart)
     # No changes
-    assert cart == old
+    assert cart["E"] == 2
+    assert cart["B"] == 0
+
 
