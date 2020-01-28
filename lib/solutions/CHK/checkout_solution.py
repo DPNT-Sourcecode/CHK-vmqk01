@@ -78,7 +78,7 @@ for sku, unit in zip(
         10,  # H
         35,  # I
         60,  # J
-        80,  # K
+        70,  # K
         90,  # L
         15,  # M
         40,  # N
@@ -86,14 +86,14 @@ for sku, unit in zip(
         50,  # P
         30,  # Q
         50,  # R
-        30,  # S
+        20,  # S
         20,  # T
         40,  # U
         50,  # V
         20,  # W
-        90,  # X
-        10,  # Y
-        50,  # Z
+        17,  # X
+        20,  # Y
+        21,  # Z
     ],
 ):
     supermarket.add_sku(sku, unit)
@@ -126,3 +126,4 @@ def checkout(skus: str) -> Price:
         except KeyError:
             return -1
     return total
+
