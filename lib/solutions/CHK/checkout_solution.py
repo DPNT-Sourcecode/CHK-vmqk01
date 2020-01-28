@@ -1,6 +1,6 @@
 # noinspection PyUnusedLocal
 from collections import Counter
-from typing import Dict, List, NamedTuple, Sequence, Tuple, Set
+from typing import Dict, List, NamedTuple, Sequence, Tuple, Set, Union
 
 SKU = str
 Price = int  # This should be decimal.Decimal if we wish to handle pennies
@@ -19,9 +19,9 @@ class PricingInfo:
     """
 
     def __init__(self) -> None:
-        self.price_table: Dict[SKU, List[Tuple[int, Price]]] = {}
+        self.price_table: Dict[Union[SKU, Pack], List[Tuple[int, Price]]] = {}
         self.cart_discounts: Dict[SKU, Tuple[int, int, SKU]] = {}
-        self.group_discounts: List[Tuple[Set[SKU], int, Price]]
+        self.group_discounts: List[Tuple[Set[SKU], Pack]] = []
 
     def add_sku(self, sku: SKU, unit_price: Price) -> None:
         if sku in self.price_table:
@@ -38,7 +38,6 @@ class PricingInfo:
     def add_buy_many_get_some_free(self, x: SKU, n: int, y: SKU, m: int) -> None:
         if x == y:
             # This is a hidden multi-price discount
-            print(x, n + m, (n - m) * self.get_price(x, 1))
             self.add_multi_price_offer(x, n + m, n * self.get_price(x, 1))
         else:
             self.cart_discounts[x] = (n, m, y)
@@ -46,7 +45,10 @@ class PricingInfo:
     def add_group_discount_offer(
         self, skus: Sequence[SKU], count: int, discount_price: Price
     ) -> None:
-        self.group_discounts.append((set(skus), count, discount_price))
+        # Create a virtual product that will replace these in the cart
+        pack = Pack(count, f"Any {count} of {','.join(skus)} for £{discount_price}")
+        self.price_table[pack] = [(1, discount_price)]
+        self.group_discounts.append((set(skus), pack))
 
     def get_price(self, sku: SKU, count: int) -> Price:
         """
@@ -139,6 +141,7 @@ def checkout(skus: str) -> Price:
         except KeyError:
             return -1
     return total
+
 
 
 
