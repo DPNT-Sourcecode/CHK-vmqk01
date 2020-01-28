@@ -68,32 +68,32 @@ supermarket = PricingInfo()
 for sku, unit in zip(
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
     [
-        50,
-        30,
-        20,
-        15,
-        40,
-        10,
-        20,
-        10,
-        35,
-        60,
-        80,
-        90,
-        15,
-        40,
-        10,
-        50,
-        30,
-        50,
-        30,
-        20,
-        40,
-        50,
-        20,
-        90,
-        10,
-        50,
+        50,  # A
+        30,  # B
+        20,  # C
+        15,  # D
+        40,  # E
+        10,  # F
+        20,  # G
+        10,  # H
+        35,  # I
+        60,  # J
+        80,  # K
+        90,  # L
+        15,  # M
+        40,  # N
+        10,  # O
+        50,  # P
+        30,  # Q
+        50,  # R
+        30,  # S
+        20,  # T
+        40,  # U
+        50,  # V
+        20,  # W
+        90,  # X
+        10,  # Y
+        50,  # Z
     ],
 ):
     supermarket.add_sku(sku, unit)
@@ -114,6 +114,7 @@ def checkout(skus: str) -> Price:
         except KeyError:
             return -1
     return total
+
 
 
 
