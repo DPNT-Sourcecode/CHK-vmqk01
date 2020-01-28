@@ -14,7 +14,10 @@ class PricingInfo:
     def add_sku(self, sku: SKU, unit_price: Price) -> None:
         if sku in self.price_table:
             raise KeyError(sku)
-        self.price_table
+        self.price_table[sku] = [(1, Price)]
+
+    def add_multi_price_offer(sku: SKU, count: int, discount_price: Price) -> None:
+        self.price_table[sku].append((count, discount_price))
 
 
 # Given an SKU, a list of possible ways to buy it (including by unit),
@@ -74,7 +77,3 @@ def checkout(skus: str) -> Price:
         except KeyError:
             return -1
     return total
-
-
-
-
