@@ -97,23 +97,36 @@ for sku, unit in zip(
     ],
 ):
     supermarket.add_sku(sku, unit)
+# Initialize special offers
 supermarket.add_multi_price_offer("A", 3, 130)
 supermarket.add_multi_price_offer("A", 5, 200)
 supermarket.add_multi_price_offer("B", 2, 45)
 supermarket.add_buy_many_get_some_free("E", 2, "B", 1)
 supermarket.add_buy_many_get_some_free("F", 2, "F", 1)
+supermarket.add_multi_price_offer("H", 5, 45)
+supermarket.add_multi_price_offer("H", 10, 80)
+supermarket.add_multi_price_offer("K", 2, 150)
+supermarket.add_buy_many_get_some_free("N", 3, "N", 1)
+supermarket.add_multi_price_offer("P", 5, 200)
+supermarket.add_multi_price_offer("Q", 3, 80)
+supermarket.add_buy_many_get_some_free("R", 3, "Q", 1)
+supermarket.add_buy_many_get_some_free("U", 3, "U", 1)
+supermarket.add_multi_price_offer("V", 2, 90)
+supermarket.add_multi_price_offer("V", 3, 130)
+
 
 # skus = unicode string
 def checkout(skus: str) -> Price:
     total = 0
     counts = Counter(skus)
-    apply_cart_discounts(counts)
+    supermarket.apply_cart_discounts(counts)
     for sku, count in counts.items():
         try:
             total += supermarket.get_price(sku, count)
         except KeyError:
             return -1
     return total
+
 
 
 

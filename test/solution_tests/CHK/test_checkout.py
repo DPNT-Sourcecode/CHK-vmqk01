@@ -60,12 +60,17 @@ def test_checkout_get_one_free_same():
     assert checkout_solution.checkout("FFFFFFFF") == 60
 
 
+def test_combined_discount_kinds():
+    assert checkout_solution.checkout("FFFF") == 30
+    "RRQQ"
+
+
 def test_checkout_invalid():
-    assert checkout_solution.checkout("X") == -1
+    assert checkout_solution.checkout("*") == -1
 
 
 def test_checkout_partially_invalid():
-    assert checkout_solution.checkout("AX") == -1
+    assert checkout_solution.checkout("A*") == -1
 
 
 def test_get_best_price():
@@ -144,4 +149,5 @@ def test_external_tests():
     assert checkout_solution.checkout("CCADDEEBBA") == 280
     assert checkout_solution.checkout("AAAAAEEBAAABB") == 455
     assert checkout_solution.checkout("ABCDECBAABCABBAAAEEAA") == 665
+
 
