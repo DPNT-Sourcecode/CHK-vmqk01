@@ -6,6 +6,17 @@ from typing import Dict, List, Tuple
 SKU = str
 Price = int  # This should be decimal.Decimal if we wish to handle pennies
 
+
+class PricingInfo:
+    def __init__(self) -> None:
+        self.price_table: Dict[SKU, List[Tuple[int, Price]]] = {}
+
+    def add_sku(self, sku: SKU, unit_price: Price) -> None:
+        if sku in self.price_table:
+            raise KeyError(sku)
+        self.price_table
+
+
 # Given an SKU, a list of possible ways to buy it (including by unit),
 # pairing count and price. Counts should be in decreasing order, and
 # the last count should always be unit price (1)
@@ -63,6 +74,7 @@ def checkout(skus: str) -> Price:
         except KeyError:
             return -1
     return total
+
 
 
 
