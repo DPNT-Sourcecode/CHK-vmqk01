@@ -137,7 +137,7 @@ supermarket.add_buy_many_get_some_free("E", 2, "B", 1)
 supermarket.add_buy_many_get_some_free("F", 2, "F", 1)
 supermarket.add_multi_price_offer("H", 5, 45)
 supermarket.add_multi_price_offer("H", 10, 80)
-supermarket.add_multi_price_offer("K", 2, 150)
+supermarket.add_multi_price_offer("K", 2, 120)
 supermarket.add_buy_many_get_some_free("N", 3, "M", 1)
 supermarket.add_multi_price_offer("P", 5, 200)
 supermarket.add_multi_price_offer("Q", 3, 80)
@@ -160,6 +160,7 @@ def checkout(skus: Sequence[SKU]) -> Price:
         except KeyError:
             return -1
     return total
+
 
 
 

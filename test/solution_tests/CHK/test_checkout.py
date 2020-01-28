@@ -171,3 +171,10 @@ def test_external_tests():
     assert checkout_solution.checkout("ABCDECBAABCABBAAAEEAA") == 665
 
 
+def test_external_tests_r5():
+    assert checkout_solution.checkout("KK") == 120
+    assert checkout_solution.checkout("KKK") == 190
+    assert checkout_solution.checkout("KKKK") == 240
+
+
+
