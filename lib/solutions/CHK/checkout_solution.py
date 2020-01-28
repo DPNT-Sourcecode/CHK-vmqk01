@@ -8,7 +8,7 @@ Price = int  # This should be decimal.Decimal if we wish to handle pennies
 
 class Pack(NamedTuple):
     # each instance of this is a virtual SKU for packs of related products
-    n: int
+    size: int
     info: str
 
 
@@ -75,14 +75,24 @@ class PricingInfo:
             free_items = m * (x_bought // n)
             cart[y] = max(0, cart[y] - free_items)
 
-    def apply_pack_discounts(self, cart: Counter) -> None:
+    def apply_group_discounts(self, cart: Counter) -> None:
         """
-        Modify cart for discounts of the type "buy N×X, get M×Y free" and
-        for group discounts.
+        Modify cart for group discounts (any N of these for £XX).
 
         Assumes it's always beneficial for the user to get this offer.
         """
         for skus, pack in self.group_discounts:
+            # Find all items that could go into the pack and their prices
+            pack_items = []
+            for sku in skus:
+                pack_items += cart[sku]*[(self.get_price(sku, 1), sku)]
+            # Sort by price (most expensive first)
+            pack_items.sort(reverse=True)
+            npacks = len(pack_items) // pack.size
+            cart[pack] = npacks
+            # remove the most expensive items that went into groups
+            for _, sku in pack_items[:npacks * packsize]:
+                cart[sku -= 1]
 
 
 
@@ -150,3 +160,4 @@ def checkout(skus: str) -> Price:
         except KeyError:
             return -1
     return total
+
