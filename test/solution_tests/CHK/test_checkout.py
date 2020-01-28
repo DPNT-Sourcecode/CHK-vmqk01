@@ -118,9 +118,9 @@ def test_external_tests():
     assert checkout_solution.checkout("AAAAAAAAAA") == 400
     assert checkout_solution.checkout("EE") == 80
     assert checkout_solution.checkout("EEB") == 80
-    assert checkout_solution.checkout("EEEB") == 150
-    assert checkout_solution.checkout("EEEEBB") == 205
-    assert checkout_solution.checkout("BEBEEE") == 205
+    assert checkout_solution.checkout("EEEB") == 120
+    assert checkout_solution.checkout("EEEEBB") == 160
+    assert checkout_solution.checkout("BEBEEE") == 160
     assert checkout_solution.checkout("A") == 50
     assert checkout_solution.checkout("AA") == 100
     assert checkout_solution.checkout("AAA") == 130
@@ -131,7 +131,8 @@ def test_external_tests():
     assert checkout_solution.checkout("BB") == 45
     assert checkout_solution.checkout("BBB") == 75
     assert checkout_solution.checkout("BBBB") == 90
-    assert checkout_solution.checkout("ABCDEABCDE") == 295
-    assert checkout_solution.checkout("CCADDEEBBA") == 295
-    assert checkout_solution.checkout("AAAAAEEBAAABB") == 505
-    assert checkout_solution.checkout("ABCDECBAABCABBAAAEEAA") == 705
+    assert checkout_solution.checkout("ABCDEABCDE") == 280
+    assert checkout_solution.checkout("CCADDEEBBA") == 280
+    assert checkout_solution.checkout("AAAAAEEBAAABB") == 455
+    assert checkout_solution.checkout("ABCDECBAABCABBAAAEEAA") == 665
+
