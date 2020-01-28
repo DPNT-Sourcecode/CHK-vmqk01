@@ -1,5 +1,6 @@
 # noinspection PyUnusedLocal
 from collections import Counter
+import math
 from typing import Dict
 
 SKU = str
@@ -12,13 +13,24 @@ PRICE_TABLE: Dict[SKU, Dict[int, Price]] = {
 }
 
 
+def get_best_price(sku: SKU, count: int) -> Price:
+    """Returns price using best offer for the given count of a product by sku"""
+    unit_price = PRICE_TABLE[sku][1]  # This should always be present
+    best = math.inf
+    for offer_count, offer_price in PRICE_TABLE[sku].items():
+        total_offers, remaining = (count // offer_count), (count % offer_count)
+        best = min(best, total_offers * offer_price + remaining * unit_price)
+
+
 # skus = unicode string
-def checkout(skus: str):
+def checkout(skus: str) -> Price:
     total = 0
     counts = Counter(skus)
     for sku, count in counts.items():
-        total += PRICE_TABLE[sku][count]
+
+        total += get_best_price(sku, count)
     return total
+
 
 
 
