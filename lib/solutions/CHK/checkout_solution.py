@@ -15,6 +15,7 @@ PRICE_TABLE: Dict[SKU, List[Tuple[int, Price]]] = {
     "C": [(1, 20)],
     "D": [(1, 15)],
     "E": [(1, 40)],
+    # Buy 2Fs get one free is equivalent to buy 3Fs, pay 2 == 20
     "F": [(3, 20), (1, 10)],
 }
 
@@ -62,5 +63,6 @@ def checkout(skus: str) -> Price:
         except KeyError:
             return -1
     return total
+
 
 
