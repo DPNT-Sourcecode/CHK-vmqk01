@@ -20,6 +20,7 @@ def get_best_price(sku: SKU, count: int) -> Price:
     for offer_count, offer_price in PRICE_TABLE[sku].items():
         total_offers, remaining = (count // offer_count), (count % offer_count)
         best = min(best, total_offers * offer_price + remaining * unit_price)
+    return best
 
 
 # skus = unicode string
@@ -27,11 +28,5 @@ def checkout(skus: str) -> Price:
     total = 0
     counts = Counter(skus)
     for sku, count in counts.items():
-
         total += get_best_price(sku, count)
     return total
-
-
-
-
-
