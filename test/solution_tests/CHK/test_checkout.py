@@ -51,6 +51,10 @@ def test_checkout_get_one_free_combined():
     assert checkout_solution.checkout("EEBBB") == 40*2 + 45
 
 
+def test_checkout_get_one_free_same():
+    assert checkout_solution.checkout("FFF") == checkout_solution.checkout("FF") == 20
+
+
 def test_checkout_invalid():
     assert checkout_solution.checkout("X") == -1
 
@@ -94,7 +98,7 @@ def test_apply_discounts_no_free_items_asked():
 
 
 def test_external_tests():
-    # These came from my first deploy run
+    # These came from my first deploy run on R2
     assert checkout_solution.checkout("") == 0
     assert checkout_solution.checkout("A") == 50
     assert checkout_solution.checkout("B") == 30
@@ -135,3 +139,4 @@ def test_external_tests():
     assert checkout_solution.checkout("CCADDEEBBA") == 280
     assert checkout_solution.checkout("AAAAAEEBAAABB") == 455
     assert checkout_solution.checkout("ABCDECBAABCABBAAAEEAA") == 665
+
