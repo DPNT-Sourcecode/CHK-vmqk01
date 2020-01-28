@@ -55,5 +55,3 @@ def test_get_best_price():
 
 def test_get_best_price_no_offer():
     assert checkout_solution.get_best_price("D", 42) == 42*15
-
-

@@ -1,7 +1,7 @@
 # noinspection PyUnusedLocal
 from collections import Counter
 import math
-from typing import Dict
+from typing import Dict, Tuple
 
 SKU = str
 Price = int  # This should be decimal.Decimal if we wish to handle pennies
@@ -18,6 +18,10 @@ PRICE_TABLE: Dict[SKU, Dict[int, Price]] = {
     "E": {1: 40},
 }
 
+# Cart wide discounts of the type "buy N×X, get M×Y free"
+# represented as CART_DISCOUNTS[X] == (N, M, Y)
+CART_DISCOUNTS: Dict[SKU, Tuple[int, int, SKU]] = {"E": (2, 1, "B")}
+
 
 def get_best_price(sku: SKU, count: int) -> Price:
     """
@@ -31,17 +35,22 @@ def get_best_price(sku: SKU, count: int) -> Price:
     return best
 
 
+def apply_cart_discounts(cart: Counter) -> None:
+    """
+    Modify cart for discounts of the type "buy N×X, get M×Y free".
+
+    Assumes it's always beneficial for the user to get this offer.
+    """
+
+
 # skus = unicode string
 def checkout(skus: str) -> Price:
     total = 0
     counts = Counter(skus)
+    apply_cart_discounts(counts)
     for sku, count in counts.items():
         try:
             total += get_best_price(sku, count)
         except KeyError:
             return -1
     return total
-
-
-
-
