@@ -25,7 +25,7 @@ def get_best_price(sku: SKU, count: int) -> Price:
     unit_price = PRICE_TABLE[sku][1]  # This should always be present
     best: Price = math.inf  # type: ignore
     for offer_count, offer_price in PRICE_TABLE[sku].items():
-        total_offers, remaining = (count // offer_count), (count % offer_count)
+        total_offers, remaining = divmod(count, offer_count)
         best = min(best, total_offers * offer_price + remaining * unit_price)
     return best
 
@@ -37,4 +37,5 @@ def checkout(skus: str) -> Price:
     for sku, count in counts.items():
         total += get_best_price(sku, count)
     return total
+
 
